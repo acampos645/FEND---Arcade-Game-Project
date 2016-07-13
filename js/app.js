@@ -1,3 +1,5 @@
+"use strict";
+
 // Enemies our player must avoid
 var Enemy = function() {
     // The image/sprite for our enemies, this uses
@@ -60,27 +62,22 @@ Player.prototype.update = function() {
 
     // Checks to see if the player has come in contact with an enemy.
     // First, it checks to see whether the player and enemy x coordinates
-    // overlap.  If they do, it test whether they are in the same row.
+    // overlap.  If they do, it tests whether they are in the same row.
     // If so, the player is reset to the starting point.
 
     allEnemies.forEach(function(enemyNum) {
-
-        if ((enemyNum.x + 60) >= player.x) {
-            if (enemyNum.x <= player.x + 60) {
-                if ((enemyNum.y - 13) == player.y) {
-                    player.x = 202;
-                    player.y = 380;
-                }
-            }
+        if ((enemyNum.x + 60) >= player.x && enemyNum.x <= player.x + 60 && (enemyNum.y - 13) == this.y) {
+            this.x = 202;
+            this.y = 380;   
         }
-    });
+    }.bind(this));
 };
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Moves the player accordin to user input, but keeps player
+// Moves the player according to user input, but keeps player
 // contained in the playable area by ensuring it will not
 // cross the outer boundaries
 Player.prototype.handleInput = function(move) {
